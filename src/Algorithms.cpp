@@ -13,7 +13,7 @@ std::vector<int> path(int start, int end, const std::unordered_map<int, int>& pa
     return road;
 }
 
-std::vector<int> BFS(int start, int end, const Graph& graph) {
+std::vector<int> BFS(int start, int end, const Graph& graph, bool early_exit) {
     std::queue<int> frontier;
     frontier.push(start);
 
@@ -27,7 +27,7 @@ std::vector<int> BFS(int start, int end, const Graph& graph) {
 
         int current = frontier.front();
 
-        if (current == end) {
+        if (current == end && early_exit) {
             break;
         }
 

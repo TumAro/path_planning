@@ -22,5 +22,5 @@ public:
     
 };
 
-std::vector<int> BFS(int start, int end, const Graph& graph);
+std::vector<int> BFS(int start, int end, const Graph& graph, bool early_exit = true);
 std::vector<int> dijkstra(int start, int end, const Graph& graph);
