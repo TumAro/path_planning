@@ -52,7 +52,7 @@ std::vector<int> dijkstra(int start, int end, const Graph& graph) {
         std::greater<>                          // for min heap -> front is lowest
     > frontier;
 
-    frontier.push({start, 0});
+    frontier.push({0, start});
 
     std::unordered_map<int, int> path_map;
     std::unordered_map<int, int> cost_so_far;
