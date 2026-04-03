@@ -125,3 +125,53 @@ std::vector<int> BestFirstSearch(
 
     return path(start, end, path_map);
 }
+
+std::vector<int> Astar(
+    int start,
+    int end,
+    const Graph& graph,
+    const auto& coordinate,
+    std::function<float(std::pair<int, int>, std::pair<int, int>)> heuristic_func
+) {
+    std::priority_queue<
+        std::pair<float, int>,                    // pair (cost, node)
+        std::vector<std::pair<float, int>>,       // underlying storage
+        std::greater<>                          // for min heap -> front is lowest
+    > frontier;
+
+    frontier.push({0, start});
+
+    std::unordered_map<int, int> path_map;
+    std::unordered_map<int, int> cost_so_far;
+    path_map[start] = -1;
+    cost_so_far[start] = 0;
+
+    while (!frontier.empty()) {
+        auto [cost, current_node] = frontier.top(); // highest priority element
+
+        if (current_node == end) break;
+
+        std::vector<int> neighbourhood = graph.neighbors(current_node);
+
+        for (auto next_node : neighbourhood) {
+            int new_cost = cost_so_far[current_node] + graph.cost(current_node, next_node);
+
+            if (cost_so_far.find(next_node) == cost_so_far.end() || new_cost < cost_so_far[next_node]) {
+                cost_so_far[next_node] = new_cost;
+
+                // we add a distance cost along with movement cost
+                float heuristic_cost = heuristic_func(
+                    coordinate[end],
+                    coordinate[next_node]
+                );
+                float priority = new_cost + heuristic_cost;
+                frontier.push({priority, next_node});
+                path_map[next_node] = current_node;
+            }
+        }
+        frontier.pop();
+    }
+    if (path_map.find(end) == path_map.end()) return {};
+
+    return path(start, end, path_map);
+}

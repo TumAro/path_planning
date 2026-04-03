@@ -38,3 +38,11 @@ std::vector<int> BestFirstSearch(
     const auto& coordinate,
     std::function<float(std::pair<int, int>, std::pair<int, int>)> heuristic_func
 ); // ! NOTE - the functional is specified for integer coordinates
+
+std::vector<int> Astar(
+    int start,
+    int end,
+    const Graph& graph,
+    const auto& coordinate,
+    std::function<float(std::pair<int, int>, std::pair<int, int>)> heuristic_func
+);
