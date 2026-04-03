@@ -31,3 +31,10 @@ float euclidean2D(auto a, auto b);
 // path planning algorithms
 std::vector<int> BFS(int start, int end, const Graph& graph, bool early_exit = true);
 std::vector<int> dijkstra(int start, int end, const Graph& graph);
+std::vector<int> BestFirstSearch(
+    int start,
+    int end,
+    const Graph& graph,
+    const auto& coordinate,
+    std::function<float(std::pair<int, int>, std::pair<int, int>)> heuristic_func
+); // ! NOTE - the functional is specified for integer coordinates

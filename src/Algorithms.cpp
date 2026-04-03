@@ -85,3 +85,43 @@ std::vector<int> dijkstra(int start, int end, const Graph& graph) {
 
     return path(start, end, path_map);
 }
+
+std::vector<int> BestFirstSearch(
+    int start,
+    int end,
+    const Graph& graph,
+    const auto& coordinate,
+    std::function<float(std::pair<int, int>, std::pair<int, int>)> heuristic_func
+) {
+    std::priority_queue<
+        std::pair<float, int>,                    // pair (cost, node)
+        std::vector<std::pair<float, int>>,       // underlying storage
+        std::greater<>                          // for min heap -> front is lowest
+    > frontier;
+
+    frontier.push({0, start});
+
+    std::unordered_map<int, int> path_map;
+    path_map[start] = -1;
+
+    while (!frontier.empty()) {
+        auto [cost, current_node] = frontier.top(); // highest priority element
+
+        if (current_node == end) break;
+
+        std::vector<int> neighbourhood = graph.neighbors(current_node);
+
+        for (auto next_node : neighbourhood) {
+
+            if (path_map.find(next_node) == path_map.end()) {
+                float priority = heuristic_func(coordinate[end], coordinate[next_node]);
+                frontier.push({priority, next_node});
+                path_map[next_node] = current_node;
+            }
+        }
+        frontier.pop();
+    }
+    if (path_map.find(end) == path_map.end()) return {};
+
+    return path(start, end, path_map);
+}
