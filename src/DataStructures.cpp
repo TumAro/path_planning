@@ -19,3 +19,12 @@ std::vector<int> Graph::neighbors(int node) const {
     }
     return nbd;
 }
+
+// different inadmessible heuristics
+float manhattan(auto a, auto b) {
+    return std::abs(a[0] - b[0]) + std::abs(a[1] - b[1]);
+}
+
+float euclidean2D(auto a, auto b) {
+    return std::sqrt( std::pow((a[0] - b[0]), 2) + std::pow((a[1] - b[1]), 2) );
+}

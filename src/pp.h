@@ -3,6 +3,8 @@
 #include <queue>
 #include <set>
 #include <unordered_map>
+#include <math.h>
+#include <functional>
 
 const int INF = 1e9;
 
@@ -22,5 +24,10 @@ public:
     
 };
 
+// heuristics
+float manhattan(auto a, auto b);
+float euclidean2D(auto a, auto b);
+
+// path planning algorithms
 std::vector<int> BFS(int start, int end, const Graph& graph, bool early_exit = true);
 std::vector<int> dijkstra(int start, int end, const Graph& graph);
